@@ -1,0 +1,6 @@
+- name: build
+  hosts: all
+  vars_files:
+    - default_vars.yml
+  tasks:
+    - include: tasks/tensorflow_android.yml

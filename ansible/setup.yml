@@ -1,0 +1,8 @@
+- name: setup
+  hosts: all
+  vars_files:
+    - default_vars.yml
+  tasks:
+    - include: tasks/bazel.yml
+    - include: tasks/android_sdk.yml
+    - include: tasks/android_ndk.yml

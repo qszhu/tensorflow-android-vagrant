@@ -1,0 +1,20 @@
+ - name: ensure source folder
+   file: dest={{ source_path }} state=directory
+
+ - name: get tensorflow source
+   git: repo=https://github.com/tensorflow/tensorflow.git dest={{ tensorflow_path }} depth=1 version=r0.11
+
+ - name: ensure android asset folder
+   file: dest={{ tensorflow_path }}/tensorflow/examples/android/assets state=directory
+
+ - name: extract model file
+   unarchive: src=downloads/inception5h.zip dest={{ tensorflow_path }}/tensorflow/examples/android/assets
+
+ - name: modify bazel workspace
+   template: src=files/WORKSPACE.j2 dest={{ tensorflow_path }}/WORKSPACE
+
+ - name: build tensorflow android
+   shell: cd {{ tensorflow_path }} && bazel build //tensorflow/examples/android:tensorflow_demo
+
+- name: copy apk out
+  fetch: src={{ tensorflow_path }}/bazel-bin/tensorflow/examples/android/tensorflow_demo.apk dest=downloads/tensorflow_demo.apk flat=yes

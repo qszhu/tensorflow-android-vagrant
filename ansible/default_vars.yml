@@ -1,0 +1,6 @@
+---
+install_path: '/home/ubuntu/opt/'
+android_sdk_path: '{{ install_path }}/android-sdk-linux'
+android_ndk_path : '{{ install_path }}/android-ndk-r13'
+source_path: '/home/ubuntu/src/'
+tensorflow_path: '{{ source_path }}/tensorflow/'

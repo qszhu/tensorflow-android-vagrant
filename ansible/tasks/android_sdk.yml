@@ -1,0 +1,21 @@
+- name: install 32bit libraries
+  sudo: True
+  apt: pkg='{{ item }}' update_cache=yes cache_valid_time=3600
+  with_items:
+    - libc6-i386
+    - lib32stdc++6
+    - lib32gcc1
+    - lib32ncurses5
+    - lib32z1
+
+- name: ensure android sdk folder
+  file: dest={{ install_path }} state=directory
+
+- name: extract android sdk
+  unarchive: src=downloads/android-sdk_r24.4.1-linux.tgz dest={{ install_path }}
+
+- name: install android build tools
+  shell: echo y | {{ android_sdk_path }}/tools/android update sdk --all --no-ui --filter '{{ item }}'
+  with_items:
+    - android-23
+    - build-tools-23.0.1

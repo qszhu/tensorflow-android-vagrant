@@ -1,0 +1,13 @@
+- name: copy bazel apt list
+  sudo: True
+  copy: src=files/bazel.list dest=/etc/apt/sources.list.d/
+
+- name: add bazel apt key
+  sudo: True
+  apt_key: url=https://bazel.io/bazel-release.pub.gpg state=present
+
+- name: install bazel
+  sudo: True
+  apt: pkg='{{ item }}' update_cache=yes cache_valid_time=3600
+  with_items:
+    - bazel
